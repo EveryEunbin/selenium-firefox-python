@@ -1,7 +1,7 @@
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.firefox.options import Options
 
-options = FirefoxOptions()
+options = Options()
 options.add_argument("--headless")
 driver = webdriver.Firefox(options=options)
 driver.get("https://google.com")
