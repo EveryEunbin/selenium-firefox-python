@@ -7,7 +7,7 @@ import time
 
 options = Options()
 options.add_argument("--headless")
-driver = webdriver.Firefox(options=options)
+# driver = webdriver.Firefox(options=options)
 # driver.get("https://google.com")
 # print(driver.title)
 
@@ -29,7 +29,7 @@ id_polls = ['choice-9d82d614-47e4-4216-b3fd-8eaacfb22324-selector', 'choice-d650
 
 def app_test():
     try:
-        webdriver.Firefox(options=options)
+        driver = webdriver.Firefox(options=options)
         driver.get('https://k4us.com.br/pak2022')
         print(driver.title)
         driver_status = True
@@ -55,7 +55,6 @@ if __name__ == '__main__':
     start_time = datetime.now()
     print('Time start:', str(start_time))
     app_test()
-    # app_test()
     end_time = datetime.now()
     print('Time end:', str(end_time))
     print('Time difference:', str(end_time - start_time))
