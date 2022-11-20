@@ -39,11 +39,14 @@ def app_test():
 
     if driver_status:
         for i in range(len(polls)):
-            element_vote = driver.find_element(By.ID, id_polls[i])
-            driver.execute_script("arguments[0].click();", element_vote)
-            element_submit = driver.find_element(By.CSS_SELECTOR, f"#{polls[i]} > form > .totalpoll-buttons > button.totalpoll-buttons-vote")
-            driver.execute_script("arguments[0].click();", element_submit)
-            time.sleep(10)
+            try:
+                element_vote = driver.find_element(By.ID, id_polls[i])
+                driver.execute_script("arguments[0].click();", element_vote)
+                element_submit = driver.find_element(By.CSS_SELECTOR, f"#{polls[i]} > form > .totalpoll-buttons > button.totalpoll-buttons-vote")
+                driver.execute_script("arguments[0].click();", element_submit)
+                time.sleep(10)
+            except:
+                print(f"Cannot find element")
             try: 
                 element_error = driver.find_element(By.CSS_SELECTOR, f"#{polls[i]} > form > .totalpoll-message-error")
                 print(element_error.text)
@@ -54,7 +57,6 @@ def app_test():
 if __name__ == '__main__':
     start_time = datetime.now()
     print('Time start:', str(start_time))
-    app_test()
     app_test()
     end_time = datetime.now()
     print('Time end:', str(end_time))
