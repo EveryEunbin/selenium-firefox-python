@@ -24,34 +24,34 @@ options.add_argument("--headless")
 # for option in options:
 #     chrome_options.add_argument(option)
 
-polls = ['totalpoll-poll-23795', 'totalpoll-poll-23796', 'totalpoll-poll-23800']
-id_polls = ['choice-9d82d614-47e4-4216-b3fd-8eaacfb22324-selector', 'choice-d6501067-de0b-47b1-bf84-f84f73305777-selector', 'choice-76cad3be-76e4-406c-80cc-8cb18f1abd75-selector']
-
 def app_test():
-    try:
-        driver = webdriver.Firefox(options=options)
-        driver.get('https://k4us.com.br/pak2022')
-        print(driver.title)
-        driver_status = True
-    except:
-        print('Connection fails')
-        driver_status = False
+    url = 'https://www.kodhit.com/vote/2022'
 
-    if driver_status:
-        for i in range(len(polls)):
-            try:
-                element_vote = driver.find_element(By.ID, id_polls[i])
-                driver.execute_script("arguments[0].click();", element_vote)
-                element_submit = driver.find_element(By.CSS_SELECTOR, f"#{polls[i]} > form > .totalpoll-buttons > button.totalpoll-buttons-vote")
-                driver.execute_script("arguments[0].click();", element_submit)
-                time.sleep(10)
-            except:
-                print(f"Cannot find element")
-            try: 
-                element_error = driver.find_element(By.CSS_SELECTOR, f"#{polls[i]} > form > .totalpoll-message-error")
-                print(element_error.text)
-            except:
-                print('No error message')
+    driver = webdriver.Firefox(options=options)
+    driver.get(url)
+    print(driver.title)
+    time.sleep(5)
+
+    elements = driver.find_elements(By.CSS_SELECTOR, ".hvr-reveal")
+    for element in elements:
+        print(element.text)
+        if element.text == "Extraordinary Attorney Woo":
+            driver.execute_script("arguments[0].click();", element)
+            break
+    time.sleep(2)
+
+    button_element = driver.find_element(By.CSS_SELECTOR, ".v-btn--large")
+    # button_element.click()
+    driver.execute_script("arguments[0].click();", button_element)
+    time.sleep(2)
+
+    buttons = driver.find_elements(By.CSS_SELECTOR, ".v-btn__content")
+    for button in buttons:
+        print(button.text)
+        if button.text == "ยืนยัน":
+            driver.execute_script("arguments[0].click();", button)
+            break
+    time.sleep(10)
     driver.quit()
 
 if __name__ == '__main__':
